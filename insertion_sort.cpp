@@ -1,3 +1,6 @@
+#define LINEAR_SEARCH
+#define INCREASING_ORDER
+
 using namespace std;
 #include <iostream>
 
@@ -16,15 +19,21 @@ int main() {
   input(array, size);
 
   //linear search
+#ifdef LINEAR_SEARCH
   int value;
+  cout << "Write an element to search: ";
   cin >> value;
   cout << linear_search(array, size, value)<< endl;
+#endif
 
+#ifdef INCREASING_ORDER
   //Calculation of increasing order
   increasing_order(array, size);
-  output(array, size);
+#else
   //Calculation of decreasing order
   decreasing_order(array, size);
+  #endif
+
   output(array, size);
   return 0;
 
@@ -87,4 +96,30 @@ void output(int *array, int size) {
   }
 
   cout << " " << endl;
+}
+
+int binary_search(int *array, int low, int high, int to_find) {
+
+  if(low == high) {
+    if(array[low] == to_find) {
+      return low;
+    }
+    else {
+      return -1;
+    }
+  }
+  int index_found = -2;
+  int middle = (high + low) / 2;
+
+  if(array[middle] == to_find) {
+    return middle;
+  }
+  else if(array[middle] > to_find) {
+    index_found = binary_search(array, low, middle-1, to_find);
+  }
+  else {
+    index_found = binary_search(array, middle + 1, high, to_find);
+  }
+  return index_found;
+
 }
